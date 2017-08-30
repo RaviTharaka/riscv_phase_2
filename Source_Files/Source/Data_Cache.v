@@ -397,7 +397,11 @@ module Data_Cache #(
             word_address_del_3 <= word_address_del_2;
             word_address_del_4 <= word_address_del_3;
             
-            data_del_3 <= data_del_2;
+            // Data delay 3 according to byte enable lines
+            data_del_3[ 7 :  0] <= (byte_enb_del_2[0])? data_del_2[ 7 :  0] : data_to_proc[ 7 :  0];
+            data_del_3[15 :  8] <= (byte_enb_del_2[1])? data_del_2[15 :  8] : data_to_proc[15 :  8];
+            data_del_3[23 : 16] <= (byte_enb_del_2[2])? data_del_2[23 : 16] : data_to_proc[23 : 16];
+            data_del_3[31 : 24] <= (byte_enb_del_2[3])? data_del_2[31 : 24] : data_to_proc[31 : 24];
             data_del_4 <= data_del_3;
             
             dirty_to_ram_del_1 <= dirty_to_ram;
